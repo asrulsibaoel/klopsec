@@ -3,14 +3,9 @@
 FROM python:3.7
 
 RUN pip3 install --upgrade pip && \
-    pip3 install mlflow --upgrade && \
-    pip3 install awscli --upgrade  && \
-    pip3 install boto3 --upgrade
+    pip3 install mlflow --upgrade
 
 ENV PORT 5000
-ENV AWS_BUCKET bucket
-ENV AWS_ACCESS_KEY_ID aws_id
-ENV AWS_SECRET_ACCESS_KEY aws_key
 
 ENV FILE_DIR /tmp/mlflow
 
