@@ -1,86 +1,86 @@
-variables:
-  DOCKER_DRIVER: overlay
-  DOCKER_HOST: tcp://localhost:2375/
-  DOCKER_TLS_CERTDIR: ""
-  STAGE_IMAGE_APP_TAG: $GCP_REGION-docker.pkg.dev/koinworks-dwh-prod/development-container/klops:staging
-  PROD_IMAGE_APP_TAG: $GCP_REGION-docker.pkg.dev/koinworks-dwh-prod/production-container/klops:master
-  EXTERNAL_SERVICE_STAGE_API_BASE_URL: https://staging-klops.koinworks.io/
-  EXTERNAL_SERVICE_PROD_API_BASE_URL: https://klops.koinworks.io/
+# variables:
+#   DOCKER_DRIVER: overlay
+#   DOCKER_HOST: tcp://localhost:2375/
+#   DOCKER_TLS_CERTDIR: ""
+#   STAGE_IMAGE_APP_TAG: $GCP_REGION-docker.pkg.dev/koinworks-dwh-prod/development-container/klops:staging
+#   PROD_IMAGE_APP_TAG: $GCP_REGION-docker.pkg.dev/koinworks-dwh-prod/production-container/klops:master
+#   EXTERNAL_SERVICE_STAGE_API_BASE_URL: https://staging-klops.koinworks.io/
+#   EXTERNAL_SERVICE_PROD_API_BASE_URL: https://klops.koinworks.io/
   
-before_script:
-  - gcloud auth configure-docker asia-southeast2-docker.pkg.dev
+# before_script:
+#   - gcloud auth configure-docker asia-southeast2-docker.pkg.dev
 
-stages:
-  - build
-  - staging
-  - release
-  - deploy
+# stages:
+#   - build
+#   - staging
+#   - release
+#   - deploy
 
-build:
-  stage: build
-  tags:
-    - data-team
-  script:
-    - export "IMAGE_APP_TAG=$STAGE_IMAGE_APP_TAG"
-    - export "BACKEND_HOST=$STAGE_BACKEND_HOST"
-    - export "BACKEND_PORT=$STAGE_BACKEND_PORT"
-    - export "BQ_PROJECT_ID=$STAGE_BQ_PROJECT_ID"
-    - export "BQ_TABLE_NAME=$STAGE_BQ_TABLE_NAME"
-    - docker-compose build
-    - docker-compose push
-  only:
-    - staging
+# build:
+#   stage: build
+#   tags:
+#     - data-team
+#   script:
+#     - export "IMAGE_APP_TAG=$STAGE_IMAGE_APP_TAG"
+#     - export "BACKEND_HOST=$STAGE_BACKEND_HOST"
+#     - export "BACKEND_PORT=$STAGE_BACKEND_PORT"
+#     - export "BQ_PROJECT_ID=$STAGE_BQ_PROJECT_ID"
+#     - export "BQ_TABLE_NAME=$STAGE_BQ_TABLE_NAME"
+#     - docker-compose build
+#     - docker-compose push
+#   only:
+#     - staging
 
-deploy-to-stage:
-  stage: staging
-  tags:
-    - data-team  
-  script:
-    - eval $(ssh-agent -s)
-    - export "EXTERNAL_SERVICE_KEY=$EXTERNAL_SERVICE_STAGE_KEY"
-    - export "IMAGE_APP_TAG=$STAGE_IMAGE_APP_TAG"
-    - export "BACKEND_HOST=$STAGE_BACKEND_HOST"
-    - export "BACKEND_PORT=$STAGE_BACKEND_PORT"
-    - export "BQ_PROJECT_ID=$STAGE_BQ_PROJECT_ID"
-    - export "BQ_TABLE_NAME=$STAGE_BQ_TABLE_NAME"
-    - docker-compose down --remove-orphans
-    - docker-compose pull
-    - docker-compose up -d
-  only:
-    - staging
+# deploy-to-stage:
+#   stage: staging
+#   tags:
+#     - data-team  
+#   script:
+#     - eval $(ssh-agent -s)
+#     - export "EXTERNAL_SERVICE_KEY=$EXTERNAL_SERVICE_STAGE_KEY"
+#     - export "IMAGE_APP_TAG=$STAGE_IMAGE_APP_TAG"
+#     - export "BACKEND_HOST=$STAGE_BACKEND_HOST"
+#     - export "BACKEND_PORT=$STAGE_BACKEND_PORT"
+#     - export "BQ_PROJECT_ID=$STAGE_BQ_PROJECT_ID"
+#     - export "BQ_TABLE_NAME=$STAGE_BQ_TABLE_NAME"
+#     - docker-compose down --remove-orphans
+#     - docker-compose pull
+#     - docker-compose up -d
+#   only:
+#     - staging
 
-release:
-  stage: release
-  tags:
-    - data-team
-    - production
-  script:
-    - export "IMAGE_APP_TAG=$PROD_IMAGE_APP_TAG"
-    - export "BACKEND_HOST=$PROD_BACKEND_HOST"
-    - export "BACKEND_PORT=$PROD_BACKEND_PORT"
-    - export "BQ_PROJECT_ID=$PROD_BQ_PROJECT_ID"
-    - export "BQ_TABLE_NAME=$PROD_BQ_TABLE_NAME"
-    - docker-compose build
-    - docker-compose push
-  only:
-    - main
+# release:
+#   stage: release
+#   tags:
+#     - data-team
+#     - production
+#   script:
+#     - export "IMAGE_APP_TAG=$PROD_IMAGE_APP_TAG"
+#     - export "BACKEND_HOST=$PROD_BACKEND_HOST"
+#     - export "BACKEND_PORT=$PROD_BACKEND_PORT"
+#     - export "BQ_PROJECT_ID=$PROD_BQ_PROJECT_ID"
+#     - export "BQ_TABLE_NAME=$PROD_BQ_TABLE_NAME"
+#     - docker-compose build
+#     - docker-compose push
+#   only:
+#     - main
 
-deploy-to-prod:
-  stage: deploy
-  tags:
-    - data-team
-    - production
-  script:
-    - eval $(ssh-agent -s)
-    - export "EXTERNAL_SERVICE_KEY=$EXTERNAL_SERVICE_PROD_KEY"
-    - export "IMAGE_APP_TAG=$PROD_IMAGE_APP_TAG"
-    - export "BACKEND_HOST=$PROD_BACKEND_HOST"
-    - export "BACKEND_PORT=$PROD_BACKEND_PORT"
-    - export "BQ_PROJECT_ID=$PROD_BQ_PROJECT_ID"
-    - export "BQ_TABLE_NAME=$PROD_BQ_TABLE_NAME"
-    - docker-compose down --remove-orphans
-    - docker-compose pull
-    - docker-compose up -d
-  only:
-    - main
-  when: manual
+# deploy-to-prod:
+#   stage: deploy
+#   tags:
+#     - data-team
+#     - production
+#   script:
+#     - eval $(ssh-agent -s)
+#     - export "EXTERNAL_SERVICE_KEY=$EXTERNAL_SERVICE_PROD_KEY"
+#     - export "IMAGE_APP_TAG=$PROD_IMAGE_APP_TAG"
+#     - export "BACKEND_HOST=$PROD_BACKEND_HOST"
+#     - export "BACKEND_PORT=$PROD_BACKEND_PORT"
+#     - export "BQ_PROJECT_ID=$PROD_BQ_PROJECT_ID"
+#     - export "BQ_TABLE_NAME=$PROD_BQ_TABLE_NAME"
+#     - docker-compose down --remove-orphans
+#     - docker-compose pull
+#     - docker-compose up -d
+#   only:
+#     - main
+#   when: manual
