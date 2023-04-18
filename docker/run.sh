@@ -33,7 +33,7 @@ if [ -z "${BUCKET_NAME}" ]; then
 fi
 
 
-mkdir -p "${FILE_DIR}"
+# mkdir -p "${FILE_DIR}"
 
 mlflow server \
     --backend-store-uri postgresql://$POSTGRES_USERNAME:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB_NAME \

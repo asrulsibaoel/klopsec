@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: my-virtualservice
+spec:
+  hosts:
+    - '*'
+  gateways:
+    - my-gateway
+  http:
+    - match:
+        - port: 5000
+      route:
+        - destination:
+            host: mlflow-mlflow-tracking
+            port:
+              number: 5000
