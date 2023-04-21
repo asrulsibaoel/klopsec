@@ -1,0 +1,38 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istio-with-extra-ports
+spec:
+  profile: default
+  components:
+    ingressGateways:
+      - namespace: istio-system
+        name: istio-ingressgateway
+        enabled: true
+        k8s:
+          service:
+            ports:
+              - port: 15021
+                targetPort: 32357
+                name: status-port
+                protocol: TCP
+              - port: 80
+                targetPort: 30926
+                name: http2
+                protocol: TCP
+              - port: 443
+                targetPort: 31638
+                name: https
+                protocol: TCP
+              - port: 31400
+                targetPort: 31443
+                name: not-know
+                protocol: TCP
+              - port: 15443
+                targetPort: 31894
+                name: tls
+                protocol: TCP
+              - port: 5000
+                targetPort: 5000
+                name: mlflow
+                protocol: TCP

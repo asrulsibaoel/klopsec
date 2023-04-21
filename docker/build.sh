@@ -1,6 +1,5 @@
 #!/bin/bash
+gcloud auth configure-docker asia-southeast2-docker.pkg.dev
 
-img='koinworks/mlflow'
-tag='0.1'
-docker build -t $img:$tag .
-
+docker-compose -f docker/docker-compose.yml build
+docker-compose -f docker/docker-compose.yml push

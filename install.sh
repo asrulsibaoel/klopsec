@@ -1,5 +1,5 @@
 #!/bin/bash
-gcloud container clusters get-credentials $CLUSTER_NAME --zone $GCP_REGION --project $PROJECT_ID
+gcloud container clusters get-credentials $CLUSTER_NAME --zone $GCP_ZONE --project $PROJECT_ID
 curl -L https://istio.io/downloadIstio | ISTIO_VERSION=$ISTIO_VERSION TARGET_ARCH=x86_64 sh -
 
 cd istio-$ISTIO_VERSION && export PATH=$PWD/bin:$PATH
@@ -16,3 +16,5 @@ helm install seldon-core seldon-core-operator \
 
 kubectl create namespace seldon
 kubectl create namespace mlflow
+
+helm install -f values.yaml mlflow ./
