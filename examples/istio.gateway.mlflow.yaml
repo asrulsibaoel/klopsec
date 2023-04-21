@@ -1,14 +1,15 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: mlflow
+  name: mlflow-gateway
+  namespace: mlflow
 spec:
   selector:
     istio: ingressgateway
   servers:
     - port:
-        number: 5000
         name: mlflow
+        number: 5000
         protocol: HTTP
       hosts:
-        - '*'
+        - "*"

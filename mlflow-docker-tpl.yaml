@@ -1,0 +1,169 @@
+---
+# Source: mlflow-tracking/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mlflow
+  labels:
+    helm.sh/chart: mlflow-tracking-0.1.0
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/instance: mlflow-template
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: mlflow-tracking/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mlflow
+  labels:
+    helm.sh/chart: mlflow-tracking-0.1.0
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/instance: mlflow-template
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5000
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/instance: mlflow-template
+---
+# Source: mlflow-tracking/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow
+  labels:
+    helm.sh/chart: mlflow-tracking-0.1.0
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/instance: mlflow-template
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mlflow
+      app.kubernetes.io/instance: mlflow-template
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mlflow
+        app.kubernetes.io/instance: mlflow-template
+    spec:
+      serviceAccountName: mlflow
+      securityContext:
+        {}
+      containers:
+        - name: mlflow-tracking
+          securityContext:
+            {}
+          image: "asia-southeast2-docker.pkg.dev/koinworks-data-staging/development-container/mlflow:staging"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+          env:
+            - name: "BUCKET_NAME"
+              value: "gs://koinworks-mlflow-dev"
+            - name: "PORT"
+              value: "5000"
+            - name: "POSTGRES_DB_NAME"
+              value: "mlflow_db_test"
+            - name: "POSTGRES_HOST"
+              value: "10.74.192.3"
+            - name: "POSTGRES_PASSWORD"
+              value: "koinworksdev2022"
+            - name: "POSTGRES_PORT"
+              value: "5432"
+            - name: "POSTGRES_USERNAME"
+              value: "postgres"
+---
+# Source: mlflow-tracking/templates/hpa.yaml
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mlflow
+  labels:
+    helm.sh/chart: mlflow-tracking-0.1.0
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/instance: mlflow-template
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mlflow
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: 80
+---
+# Source: mlflow-tracking/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mlflow
+  labels:
+    helm.sh/chart: mlflow-tracking-0.1.0
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/instance: mlflow-template
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  ingressClassName: mlflow
+  rules:
+    - host: "mlflow.mlflow.svc.cluster.local"
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: mlflow
+                port:
+                  number: 5000
+---
+# Source: mlflow-tracking/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "mlflow-test-connection"
+  labels:
+    helm.sh/chart: mlflow-tracking-0.1.0
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/instance: mlflow-template
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['mlflow:5000']
+  restartPolicy: Never

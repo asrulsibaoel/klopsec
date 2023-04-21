@@ -2,6 +2,8 @@
 
 helm install -n mlflow \
     mlflow ./mlflow-docker \
+    --set image.repository=$IMG \
+    --set image.tag=$TAG \
     --set env.POSTGRES_USERNAME=$POSTGRES_USERNAME \
     --set env.POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
     --set env.POSTGRES_HOST=$POSTGRES_HOST \

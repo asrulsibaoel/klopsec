@@ -6,12 +6,12 @@ spec:
   hosts:
     - '*'
   gateways:
-    - my-gateway
+    - mlflow
   http:
     - match:
         - port: 5000
       route:
         - destination:
-            host: mlflow-mlflow-tracking
+            host: mlflow.local
             port:
               number: 5000

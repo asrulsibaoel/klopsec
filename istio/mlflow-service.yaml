@@ -36,8 +36,8 @@ spec:
     spec:
       serviceAccountName: httpbin-two
       containers:
-        - image: docker.io/kennethreitz/httpbin
-          imagePullPolicy: IfNotPresent
+        - image: asia-southeast2-docker.pkg.dev/koinworks-data-staging/development-container/mlflow
+          imagePullPolicy: Always
           name: httpbin-two
           ports:
-            - containerPort: 80
+            - containerPort: 5000
