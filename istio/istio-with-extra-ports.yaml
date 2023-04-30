@@ -36,3 +36,7 @@ spec:
                 targetPort: 5000
                 name: mlflow
                 protocol: TCP
+              - port: 9090
+                tagetPort: 9090
+                name: prometheus
+                protocol: TCP
