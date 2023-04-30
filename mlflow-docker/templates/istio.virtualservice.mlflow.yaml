@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: mlflow-virtual-service
-  namespace: mlflow
+  namespace: {{ .Values.namespace }}
 spec:
   gateways:
     - mlflow/mlflow-gateway

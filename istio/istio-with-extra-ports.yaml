@@ -13,23 +13,23 @@ spec:
           service:
             ports:
               - port: 15021
-                targetPort: 32357
+                targetPort: 32323
                 name: status-port
                 protocol: TCP
               - port: 80
-                targetPort: 30926
+                targetPort: 32530
                 name: http2
                 protocol: TCP
               - port: 443
-                targetPort: 31638
+                targetPort: 30956
                 name: https
                 protocol: TCP
               - port: 31400
-                targetPort: 31443
+                targetPort: 30770
                 name: not-know
                 protocol: TCP
               - port: 15443
-                targetPort: 31894
+                targetPort: 32704
                 name: tls
                 protocol: TCP
               - port: 5000
