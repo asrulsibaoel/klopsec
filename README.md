@@ -19,6 +19,16 @@ This repo contains templates to build End-to-End Machine Learning Ops Using Belo
 - run: `./install_monitoring.sh`  
 - It will serve under port `9090`.
 
+## Accessing the APIs  
+TODO:  
+- Create documentation for accessing the Seldon Rest API.  
+- Create documentation for connecting to MLflow Tracking Server within code.
+
+## Accessing the UIs
+- Create documentation for accessing the Seldon Core Model API Swagger.
+- Create documentation for accessing the MLFlow Tracking Server UI Dashboard.
+
+
 ## Roadmap  
 - [x] Integrate MLflow Tracking Server within the cluster  
 - [x] Adding support for Pod Monitoring
