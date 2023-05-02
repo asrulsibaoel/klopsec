@@ -13,3 +13,19 @@ spec:
       protocol: HTTP
     hosts:
     - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: seldon-monitoring
+  namespace: seldon-monitoring
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 9090
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
