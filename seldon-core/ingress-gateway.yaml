@@ -17,7 +17,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: seldon-monitoring
+  name: seldon-gateway
   namespace: seldon-monitoring
 spec:
   selector:

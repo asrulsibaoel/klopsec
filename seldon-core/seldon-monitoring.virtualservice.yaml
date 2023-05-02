@@ -5,7 +5,7 @@ metadata:
   namespace: seldon-monitoring
 spec:
   gateways:
-    - seldon-monitoring/seldon-monitoring
+    - seldon-monitoring/seldon-gateway
   hosts:
     - "*"
   http:
@@ -14,6 +14,6 @@ spec:
         - port: 9090
       route:
         - destination:
-            host: seldon-monitoring
+            host: seldon-monitoring-prometheus
             port:
               number: 9090

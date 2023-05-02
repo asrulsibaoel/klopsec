@@ -37,6 +37,6 @@ spec:
                 name: mlflow
                 protocol: TCP
               - port: 9090
-                tagetPort: 9090
-                name: prometheus
+                targetPort: 9090
+                name: seldon-monitoring
                 protocol: TCP
