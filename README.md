@@ -5,7 +5,11 @@ This repo contains templates to build End-to-End Machine Learning Ops Using Belo
 - Remote Storage engines (such as GCS, S3, Azure Storage, etc.)  
 - Data Versioning Tool: [DVC](https://dvc.org) by iterative.ai  
 - [Mlflow](https://mlflow.org) A Machine Learning research lifecycle tool  
-- [Seldon](https://www.seldon.io/solutions/open-source-projects/core): An Opensource Kubernetes Framework to deploy machine learning models. 
+- [Seldon](https://www.seldon.io/solutions/open-source-projects/core): An Opensource Kubernetes Framework to deploy machine learning models.  
+
+The Flow diagram below shows how we utilize Klops Ecosystems in our Data Science lifecycle.  
+
+![Klops Ecosystem Diagram](./resources/images/klops_ecosystem.png)  
 
 ## Installation  
 ### Installing Core Environment  
