@@ -24,14 +24,7 @@ The Flow diagram below shows how we utilize Klops Ecosystems in our Data Science
 - It will serve under port `9090`.
 
 ## Accessing the APIs  
-TODO:  
-- Create documentation for accessing the Seldon Rest API.  
-- Create documentation for connecting to MLflow Tracking Server within code.
-
-## Accessing the UIs
-- Create documentation for accessing the Seldon Core Model API Swagger.
-- Create documentation for accessing the MLFlow Tracking Server UI Dashboard.
-
+All APIs and usages are already defined in the repository library [here](http://gitlab-engineering.koinworks.com/data-team/klops).
 
 ## Roadmap  
 - [x] Integrate MLflow Tracking Server within the cluster  
