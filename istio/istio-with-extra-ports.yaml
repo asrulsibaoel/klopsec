@@ -2,6 +2,7 @@ apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
   name: istio-with-extra-ports
+  namespace: istio-system
 spec:
   profile: default
   components:
@@ -13,23 +14,23 @@ spec:
           service:
             ports:
               - port: 15021
-                targetPort: 32323
+                targetPort: 30130
                 name: status-port
                 protocol: TCP
               - port: 80
-                targetPort: 32530
+                targetPort: 32668
                 name: http2
                 protocol: TCP
               - port: 443
-                targetPort: 30956
+                targetPort: 30438
                 name: https
                 protocol: TCP
               - port: 31400
-                targetPort: 30770
+                targetPort: 30138
                 name: not-know
                 protocol: TCP
               - port: 15443
-                targetPort: 32704
+                targetPort: 32203
                 name: tls
                 protocol: TCP
               - port: 5000

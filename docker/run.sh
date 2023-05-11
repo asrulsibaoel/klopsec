@@ -37,6 +37,6 @@ fi
 
 mlflow server \
     --backend-store-uri postgresql://$POSTGRES_USERNAME:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB_NAME \
-    --default-artifact-root "gs://$BUCKET_NAME/mlflow/artifacts" \
+    --default-artifact-root "$BUCKET_NAME/mlflow/artifacts" \
     --host 0.0.0.0 \
     --port "$PORT"
