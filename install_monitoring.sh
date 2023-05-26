@@ -9,4 +9,8 @@ helm upgrade --install seldon-monitoring kube-prometheus \
 
 kubectl rollout status -n seldon-monitoring statefulsets/prometheus-seldon-monitoring-prometheus
 
-kubectl apply -f ./seldon-core/prometheus.monitoring.yaml
+kubectl apply -f ./seldon-core/seldon-monitoring.peerauth.yaml
+kubectl apply -f ./seldon-core/seldon-monitoring.podmonitor.yaml
+kubectl apply -f ./seldon-core/seldon-monitoring.service.yaml
+kubectl apply -f ./seldon-core/seldon-monitoring.serviceaccount.yaml
+kubectl apply -f ./seldon-core/seldon-monitoring.virtualservice.yaml

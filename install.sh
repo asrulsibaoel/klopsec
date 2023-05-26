@@ -5,8 +5,11 @@ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=$ISTIO_VERSION TARGET_ARC
 cd istio-$ISTIO_VERSION && export PATH=$PWD/bin:$PATH
 istioctl install --set profile=demo -y
 kubectl label namespace default istio-injection=enabled
+cd ../
 
+istioctl install -f istio/istio-with-extra-ports.yaml -y
 kubectl create namespace seldon-system
+kubectl create namespace seldon-monitoring
 
 kubectl apply -f ./seldon-core/ingress-gateway.yaml
 

@@ -35,8 +35,11 @@ fi
 
 # mkdir -p "${FILE_DIR}"
 
+# echo $BUCKET_NAME >> /app/bucket_name.txt
+echo $BUCKET_NAME
+
 mlflow server \
     --backend-store-uri postgresql://$POSTGRES_USERNAME:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB_NAME \
-    --default-artifact-root "gs://$BUCKET_NAME/mlflow/artifacts" \
+    --default-artifact-root gs://seldon \
     --host 0.0.0.0 \
     --port "$PORT"
