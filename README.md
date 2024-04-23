@@ -24,7 +24,7 @@ The Flow diagram below shows how we utilize Klops Ecosystems in our Data Science
 - It will serve under port `9090`.
 
 ## Accessing the APIs  
-All APIs and usages are already defined in the repository library [here](http://gitlab-engineering.koinworks.com/data-team/klops).
+All APIs and usages are already defined in the repository library [here](https://github.com/asrulsibaoel/klops).
 
 ## Roadmap  
 - [x] Integrate MLflow Tracking Server within the cluster  
@@ -36,14 +36,12 @@ All APIs and usages are already defined in the repository library [here](http://
 - [ ] Implement A/B Testing mechanism.  
 
 ## Contributing  
-- Be Koinworks Data Engineer Team member.
-- Ask for repository ownership rights (developer or maintainer) to the DevOps Team.
-- Start developing by creating a new branch.
+- Fork this repository.
 - Do your changes / features.
 - Ask for a merge request to the staging branch with a reviewer described in your merge request.  
 
 ## Authors and acknowledgment
-This repository were authored by Koinworks Data Engineers Team.
+This repository were authored by [Me](https://github.com/asrulsibaoel)
 
 ## License
 Apache License, Version [2.0](https://www.apache.org/licenses/LICENSE-2.0).
