@@ -1,4 +1,4 @@
-# KLopsEc: Koin MLOps Ecosystems
+# KLopsEc: Kube MLOps Ecosystems
 ## Overview  
 
 This repo contains templates to build End-to-End Machine Learning Ops Using Below Stacks:  
